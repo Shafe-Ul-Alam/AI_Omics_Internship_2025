@@ -1,0 +1,49 @@
+getwd()
+
+dir.create("raw_data")
+dir.create("clean_data")
+dir.create("scripts")
+dir.create("results")
+dir.create("plots")
+
+# Load patient_info.csv
+data <- read.csv("raw_data/patient_info.csv")
+# View and inspect structure
+View(data)
+str(data)
+# Check for wrong data types
+summary(data)
+
+# Convert 'gender' to factor
+data$gender <- as.factor(data$gender)
+
+# Convert 'diagnosis' to factor
+data$diagnosis <- as.factor(data$diagnosis)
+
+# Convert smoking_status to binary factor (1 for Yes, 0 for No)
+
+data$smoking_binary <- as.factor(data$smoker)
+
+str(data)
+
+data$smoking_status <- ifelse(data$smoking_binary == "Yes", 1, 0)
+str(data)
+write.csv(data, file = "clean_data/patient_info_clean.csv", row.names = FALSE)
+
+#save entire workspace
+save.image(file = "ShafeulAlam_Class_Ib_Assignment.RData")
+
+# Select patient_id and diagnosis only
+result_data <- data[, c("patient_id", "diagnosis")]
+
+# Save to results folder
+write.csv(result_data, file = "results/patient_data.csv", row.names = FALSE)
+
+
+
+
+
+
+
+
+
